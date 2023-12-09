@@ -1,7 +1,7 @@
 CREATE DATABASE traffic;
 USE traffic;
 CREATE TABLE AccidentCategory (
-    事件編號 INT,
+    事件編號 INT PRIMARY KEY,
     事故類型及型態大類別代碼 INT,
     事故類型及型態大類別名稱 VARCHAR(255),
     事故類型及型態子類別代碼 INT,
@@ -94,6 +94,15 @@ CREATE TABLE Camera (
     GPS緯度 DECIMAL(10, 7),
     GPS經度 DECIMAL(10, 7)
 );
+
+CREATE TABLE Weather (
+    事件編號 INT PRIMARY KEY,
+    天候代碼 INT,
+    天候名稱 VARCHAR(255),
+    光線代碼 INT,
+    光線名稱 VARCHAR(255)
+);
+
 
 LOAD DATA LOCAL INFILE '/mnt/c/Users/User/OneDrive/桌面/資料庫/Traffic/交通事故的地點資訊.csv'
 INTO TABLE Location
