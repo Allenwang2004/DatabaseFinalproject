@@ -1,2 +1,2 @@
 以下寫SQL 
-1. select 發生市區鄉鎮名稱, count(*) from Location where Location.發生市區鄉鎮名稱 = \"{$selectedRegion}\" group by 發生市區鄉鎮名稱 ;
+1. select 發生市區鄉鎮名稱, count(*) from Location where Location.發生市區鄉鎮名稱 = \"{$selectedRegion}\" group by 發生市區鄉鎮名稱 ; // 區域總交通事故
