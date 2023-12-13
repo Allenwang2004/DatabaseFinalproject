@@ -103,6 +103,24 @@ CREATE TABLE Weather (
     光線名稱 VARCHAR(255)
 );
 
+CREATE TABLE users (
+    id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(30) NOT NULL,
+    pwd VARCHAR(255) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIME,
+);
+
+CREATE TABLE comments (
+    id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(30) NOT NULL,
+    pwd VARCHAR(255) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIME,
+    users_id INT(11) NOT NULL,
+    FOREIGN KEY(users_id) REFERENCES users(id) ON DELETE SET NULL
+);
+
 
 LOAD DATA LOCAL INFILE '/mnt/c/Users/User/OneDrive/桌面/資料庫/Traffic/交通事故的地點資訊.csv'
 INTO TABLE Location
