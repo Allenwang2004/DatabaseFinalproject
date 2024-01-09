@@ -13,7 +13,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         $errors = [];
         
         if(is_input_empty($username,$pwd)){
-            $errors["empty_input"] = "fill in all fields";
+            $errors["empty_input"] = "please fill in all fields";
         }
 
         $result = get_user($pdo,$username);
@@ -43,7 +43,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         $_SESSION["user_username"] = htmlspecialchars ($result["username"]);
         
 
-        header("Location: ../try_login.php?login=success");
+        header("Location: ../Index.php?login=success");
 
         $pdo=NULL;
         $stmt=NULL;
