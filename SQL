@@ -68,3 +68,11 @@ JOIN
     AccidentCategory ac ON l.事件編號 = ac.事件編號
 GROUP BY
     l.發生市區鄉鎮名稱, ac.事故類型及型態子類別名稱;//區域各類型事故數量，依使用者選定區域再加條件然後group by市區可以刪掉
+
+7.紀錄同一個地方發生的車禍數量
+select count(*) as cnt, round(GPS經度,4) as lon,round(GPS緯度,4) as lat
+from Location
+group by lon,lat
+order by cnt desc
+limit 50;
+
