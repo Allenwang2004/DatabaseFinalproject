@@ -127,7 +127,7 @@ INTO TABLE Location
 CHARACTER SET UTF8
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
-LINES TERMINATED BY '\n';
+LINES TERMINATED BY '\n'
 ignore 1 lines;
 
 LOAD DATA LOCAL INFILE '/mnt/c/Users/User/OneDrive/桌面/資料庫/Traffic/交通事故的死傷資訊.csv'
@@ -135,7 +135,7 @@ INTO TABLE Deaths
 CHARACTER SET UTF8
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
-LINES TERMINATED BY '\n';
+LINES TERMINATED BY '\n'
 ignore 1 lines;
 
 LOAD DATA LOCAL INFILE '/mnt/c/Users/User/OneDrive/桌面/資料庫/Traffic/交通事故的事故類別資訊.csv'
@@ -143,7 +143,7 @@ INTO TABLE AccidentCategory
 CHARACTER SET UTF8
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
-LINES TERMINATED BY '\n';
+LINES TERMINATED BY '\n'
 ignore 1 lines;
 
 LOAD DATA LOCAL INFILE '/mnt/c/Users/User/OneDrive/桌面/資料庫/Traffic/交通事故的時間資訊.csv'
@@ -151,7 +151,7 @@ INTO TABLE Time
 CHARACTER SET UTF8
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
-LINES TERMINATED BY '\n';
+LINES TERMINATED BY '\n'
 ignore 1 lines;
 
 LOAD DATA LOCAL INFILE '/mnt/c/Users/User/OneDrive/桌面/資料庫/Traffic/交通事故的氣候資訊.csv'
@@ -159,7 +159,7 @@ INTO TABLE Weather
 CHARACTER SET UTF8
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
-LINES TERMINATED BY '\n';
+LINES TERMINATED BY '\n'
 ignore 1 lines;
 
 LOAD DATA LOCAL INFILE '/mnt/c/Users/User/OneDrive/桌面/資料庫/Traffic/交通事故的路況資訊.csv'
@@ -167,7 +167,7 @@ INTO TABLE AccidentCondition
 CHARACTER SET UTF8
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
-LINES TERMINATED BY '\n';
+LINES TERMINATED BY '\n'
 ignore 1 lines;
 
 LOAD DATA LOCAL INFILE '/mnt/c/Users/User/OneDrive/桌面/資料庫/Traffic/測速照相資訊.csv'
@@ -175,7 +175,7 @@ INTO TABLE Camera
 CHARACTER SET UTF8
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
-LINES TERMINATED BY '\n';
+LINES TERMINATED BY '\n'
 ignore 1 lines;
 
 
