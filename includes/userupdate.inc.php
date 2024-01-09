@@ -8,13 +8,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     try {
         require_once  "try_dbh.inc.php";
 
-        $query = "UPDATE users SET username = :username , pwd = :pwd, email = :email 
-        WHERE id =1;";
+        $query = "UPDATE users SET username = :username , pwd = :pwd, email = :email WHERE username = :username;";
 
         $stmt = $pdo->prepare($query);
 
         $stmt->bindParam(":username",$username);
-        $stmt->bindParam(":pwd",$pwd);
+        $options = [
+            'cost' =>10
+        ];
+    
+        $hashedPwd = password_hash($pwd,PASSWORD_BCRYPT,$options);
+        $stmt->bindParam(":pwd",$hashedPwd);
         $stmt->bindParam(":email",$email);
 
         $stmt->execute();
@@ -22,7 +26,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $pdo = null;
         $stmt = null;
 
-        header("Location: ../try_login.php");
+        header("Location: ../accounts.php");
 
         die();
     } catch (PDOException $e) {
