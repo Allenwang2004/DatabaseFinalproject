@@ -1,22 +1,48 @@
 <?php
 $apiKey = getenv('API_KEY');
+require_once 'includes/login_view.inc.php';
+require_once 'includes/config_session.inc.php';
 ?>
 <!DOCTYPE html>
 <html>
 <head> 
     <title>Final Project</title>
     <style type="text/css">
-            .container{
-                height: 650px;
-            }
-            #map{
-                width: 100%;
-                height: 100%;
-                border: 1px solid blue;
-            }
+            h1 {
+            margin: 0 auto;
+            text-align: center;
+            clear:both;
+        }
+        .user-info-container {
+            display:flex;
+            float: right;
+            align-items: center;
+        }
+        h3 {
+            margin-right: 10px;
+        }
+        form {
+            float: right;
+        }
+        .container{
+            height: 650px;
+        }
+        #map{
+            width: 100%;
+            height: 100%;
+            border: 1px solid blue;
+        }
         </style>
 </head>
 <body>
+
+    <div class="user-info-container">
+        <h3><?php output_username();?></h3>
+        <form action="accounts.php" method="post">
+            <button>accounts</button>
+        </form>
+    </div>
+    
     <div class="container">
         <center><h1>Google Map </h1></center>
         <td>選擇地區</td>
