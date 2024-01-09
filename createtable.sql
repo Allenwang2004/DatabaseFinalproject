@@ -116,7 +116,7 @@ CREATE TABLE comments (
     username VARCHAR(30) NOT NULL,
     comment_text text NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    users_id INT(11) NOT NULL,
+    users_id INT(11) ,
     FOREIGN KEY(users_id) REFERENCES users(id) ON DELETE SET NULL
 );
 
