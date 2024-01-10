@@ -3,27 +3,21 @@
 
 2.天候 
 SELECT
-    l.發生市區鄉鎮名稱,
-    w.天候名稱,
-    COUNT(*) AS 事故數量
+    Location.發生市區鄉鎮名稱,
+    Weather.天候名稱,
+    COUNT(*) AS 交通事故總數,
+    COUNT(*) * 100.0 / SUM(COUNT(*)) OVER (PARTITION BY Location.發生市區鄉鎮名稱) AS 事件比例
 FROM
-    Location l
+    Location
 JOIN
-    Weather w ON l.事件編號 = w.事件編號
+    Weather ON Location.事件編號 = Weather.事件編號
+WHERE
+    Location.事件編號 <> 1
 GROUP BY
-    l.發生市區鄉鎮名稱, w.天候名稱; //區域各天候下事故數量，依使用者選定區域再加條件然後group by市區可以刪掉
+    Location.發生市區鄉鎮名稱, Weather.天候名稱
+ORDER BY
+    Location.發生市區鄉鎮名稱, Weather.天候名稱;
 
-3.速限
-SELECT
-    l.發生市區鄉鎮名稱,
-    ac.速限_第1當事者,
-    COUNT(*) AS 事故數量
-FROM
-    Location l
-JOIN
-    AccidentCondition ac ON l.事件編號 = ac.事件編號
-GROUP BY
-    l.發生市區鄉鎮名稱, ac.速限_第1當事者;//區域各速限下事故數量，依使用者選定區域再加條件然後group by市區可以刪掉
 
 4.傷亡總人數及平均人數
 SELECT
