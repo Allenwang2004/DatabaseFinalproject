@@ -32,9 +32,25 @@ require_once 'includes/leave_comment_view.inc.php';
     <form action = "includes/userupdate.inc.php" method="post">
         <input type="text" name="username" placeholder="Username">
         <input type="password" name="pwd" placeholder="Password">
-        <input type="text" name="email" placeholder="E-mail">
+        <input type="hidden" name="selected_region" id="selectedRegion" value="">
+        <select onchange="handleSelectChange(this)">
+                <option>桃園區</option>
+                <option>中壢區</option>
+                <option>平鎮區</option>
+                <option>八德區</option>
+                <option>楊梅區</option>
+                <option>蘆竹區</option>
+                <option>大溪區</option>
+                <option>龜山區</option>
+                <option>大園區</option>
+                <option>觀音區</option>
+                <option>新屋區</option>
+                <option>龍潭區</option>
+                <option>復興區</option>
+            </select>
         <button>Change</button>
     </form>
+    <?php check_password(); ?>
 
     <h3>Delete Account</h3>
     <form action = "includes/userdelete.inc.php" method="post">
@@ -42,6 +58,7 @@ require_once 'includes/leave_comment_view.inc.php';
         <input type="password" name="pwd" placeholder="Password">
         <button>Delete</button>
     </form>
+    <?php check_password(); ?>
 
     <h3>Search Comment</h3>
     <form class="searchform" action = "search.php" method="post">
@@ -62,3 +79,11 @@ require_once 'includes/leave_comment_view.inc.php';
     </div>
 </body>
 </html>
+
+<script>
+    function handleSelectChange(selectElement) {
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+        var selectedText = selectedOption.text;
+        document.getElementById('selectedRegion').value = selectedText;
+    }
+</script>
