@@ -8,7 +8,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
         if(empty($usercomment)){
             $_SESSION["errors_leave_comment"] = "empty comment";
-            header("Location: ../try_login.php");
+            header("Location: ../accounts.php");
             die();
         }
 
@@ -24,13 +24,13 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
         $pdo = null;
         $stmt = null;
-        header("Location: ../try_login.php");
+        header("Location: ../accounts.php");
         die();
     } catch (PDOException $e) {
         die("Query failed: ". $e->getMessage());
     }
 }
 else{
-    header("Location: ../try_login.php");
+    header("Location: ../accounts.php");
     die();
 }

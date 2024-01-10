@@ -1,14 +1,15 @@
 <?php
 require_once 'login_model.inc.php';
+require_once 'login_contr.inc.php';
 require_once  "try_dbh.inc.php";
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $username = $_POST["username"];
     $pwd = $_POST["pwd"];
-    $result = get_user($pdo,$username);
+    
     try {
-
+        $result = get_user($pdo,$username);
         if(!password_verify($pwd, $result["pwd"])){
-            $_SESSION["errors_login"] = $errors;
+            $_SESSION["wrong_password"] = "wrong password";
             header("Location: ../accounts.php");
             die();
         }

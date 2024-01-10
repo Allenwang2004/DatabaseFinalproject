@@ -41,7 +41,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
         $_SESSION["user_id"] = $result["id"];
         $_SESSION["user_username"] = htmlspecialchars ($result["username"]);
-        
+        $_SESSION["user_region"] = htmlspecialchars ($result["region"]);
 
         header("Location: ../Index.php?login=success");
 
