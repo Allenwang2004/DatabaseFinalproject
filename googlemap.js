@@ -1,5 +1,5 @@
 // Initialize and add the map
-let map;
+// let map;
 
 async function initMap() {
   // The location of Uluru
@@ -11,25 +11,43 @@ async function initMap() {
 
   // The map, centered at Uluru
   map = new Map(document.getElementById("map"), {
-    zoom: 15,
+    zoom: 12,
     center: position,
     mapTypeId: 'roadmap',
   });
 
   // The marker, positioned at Uluru
-  var my_pos = {lat: 25.011572, lng: 121.21478};
-  const marker = new google.maps.Marker({
-    map: map,
-    position: my_pos,
-    title: "Uluru",
-  });
 }
+
 async function handleSelectChange(selectElement) {
-  var selectedOption = selectElement.options[selectElement.selectedIndex];
-  var selectedText = selectedOption.text;
-  var selectedValue = selectedOption.value;
-  console.log("Selected option text: " + selectedText);
-  console.log("Selected option value: " + selectedValue);
+  if (selectElement == null)
+    return;
+  var selectedText;
+  var selectedValue;
+  if (typeof selectElement == 'string'){
+    selectedText = selectElement;
+    selectedValue = selectElement;
+    var dynamicDefaultValue = selectElement;
+    var regionElement = document.getElementById("region");
+    for (var i = 0; i < regionElement.options.length; i++) {
+      if (regionElement.options[i].text === dynamicDefaultValue) {
+          regionElement.options[i].selected = true;
+          break;
+      }
+  }
+  }else{
+    var selectedOption = selectElement.options[selectElement.selectedIndex];
+    selectedText = selectedOption.text;
+    selectedValue = selectedOption.value;
+  }
+  $.ajax({
+    method: "POST",
+    url: "re_query.php", 
+    data: { region: selectedValue },
+    success: function(response) {
+        $("#sqlquery").html(response);
+    }
+  });
   var myLatlng;
   switch(selectedText){
       case '桃園區':
@@ -80,12 +98,45 @@ async function handleSelectChange(selectElement) {
     center: myLatlng,
     mapTypeId: 'roadmap'
   };
-  var map = new google.maps.Map(document.getElementById('map'),
-    mapOptions);
-  // var marker_pos = {lat: 125.209935, lng: 24.9601};
-  // const marker = new google.maps.Marker({
-  //   map: map,
-  //   position: marker_pos,
-  //   title: "traffic",
-  // });
+  var locations_length = 50;
+  let locations = new Array(locations_length);
+  $.ajax({
+    url: "getMarker.php", 
+    method: 'POST',
+    dataType: 'json',
+    data: { region: selectedValue },
+    success: function(response) {
+        // console.log(response);
+        for (var i = 0; i < response.length; i++) {
+          locations[i] = new Array("交通事故次數 : "+response[i].cnt, response[i].lon, response[i].lat, response[i].dsum);
+          // console.log(response[i].cnt);
+        }
+      var map = new google.maps.Map(document.getElementById('map'),
+      mapOptions);
+      var marker, i;
+      for (i=0;i<locations_length;i++){
+        if (locations[i][3] == 0){
+          marker = new google.maps.Marker({
+              position: new google.maps.LatLng(locations[i][2], locations[i][1]),
+              map: map,
+              title: locations[i][0]
+          });
+        }else{
+          const image ="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
+          marker = new google.maps.Marker({
+            position: new google.maps.LatLng(locations[i][2], locations[i][1]),
+            map: map,
+            icon: image,
+            title: locations[i][0]
+          });
+        }
+          marker.addListener("click", function () {
+              alert(this.title);
+          });
+      }
+    },
+    error: function(error) {
+      console.error('Error:', error);
+    }
+  });
 }
