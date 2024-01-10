@@ -94,3 +94,11 @@ SELECT
 from temp
 GROUP BY 發生市區鄉鎮名稱;
 /*改良後的計算死傷*/
+
+9.判斷死亡人數
+select count(*) as cnt, round(l.GPS經度,4) as lon,round(l.GPS緯度,4) as lat,sum(d.死亡人數_24小時內+d.死亡人數_2_30日內) as dsum
+from Location as l
+join Deaths as d on d.事件編號 = l.事件編號
+group by lon, lat
+order by cnt desc
+limit 50;
