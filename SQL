@@ -43,19 +43,22 @@ GROUP BY
 
 5.平均事故處理用時
 SELECT
-    l.發生市區鄉鎮名稱,
+    Location.發生市區鄉鎮名稱,
     AVG(
-        TIME_TO_SEC(TIMEDIFF(
-            STR_TO_DATE(CONVERT(t.結束_事故排除_時間, TIME), '%H%i%s'),
-            STR_TO_DATE(CONVERT(t.到場處理時間, TIME), '%H%i%s')
-        )) / 60
-    ) AS 平均處理用時
+        ((Time.結束_事故排除_時間 / 10000) % 100) * 3600 +
+        ((Time.結束_事故排除_時間 / 100) % 100) * 60 +
+        (Time.結束_事故排除_時間 % 100) -
+        ((Time.到場處理時間 / 10000) % 100) * 3600 -
+        ((Time.到場處理時間 / 100) % 100) * 60 -
+        (Time.到場處理時間 % 100)
+    ) AS 平均處理時間
 FROM
-    Location l
+    Time
 JOIN
-    Time t ON l.事件編號 = t.事件編號
+    Location ON Time.事件編號 = Location.事件編號
 GROUP BY
-    l.發生市區鄉鎮名稱;//區域平均事故處理用時，依使用者選定區域再加條件然後group by市區可以刪掉
+    Location.發生市區鄉鎮名稱;
+
 
 6.類型
 SELECT
