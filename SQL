@@ -76,3 +76,21 @@ group by lon,lat
 order by cnt desc
 limit 50;
 
+8.計算死傷(不重複計算同一事故)
+with temp as(
+    select distinct d.死亡人數_24小時內,d.死亡人數_2_30日內,d.受傷人數, l.發生市區鄉鎮名稱, t.發生日期, t.到場處理時間
+    from Deaths d 
+    join Location as l on l.事件編號 = d.事件編號
+    join Time as t on t.事件編號 = d.事件編號
+)
+SELECT
+    發生市區鄉鎮名稱,
+    SUM(死亡人數_24小時內) AS 事故後24小時內死亡人數,
+    SUM(死亡人數_2_30日內+死亡人數_24小時內) AS 事故後30日內死亡人數,
+    SUM(受傷人數) AS 總受傷人數,
+    AVG(死亡人數_24小時內) AS 平均事故後24小時內死亡人數,
+    AVG(死亡人數_2_30日內+死亡人數_24小時內) AS 平均事故後30日內死亡人數,
+    AVG(受傷人數) AS 平均受傷人數
+from temp
+GROUP BY 發生市區鄉鎮名稱;
+/*改良後的計算死傷*/
