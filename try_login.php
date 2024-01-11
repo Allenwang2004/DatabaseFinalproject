@@ -35,7 +35,7 @@ require_once 'includes/leave_comment_view.inc.php';
         <form action = "includes/signup.inc.php" method="post">
             <input type="text" name="username" placeholder="Username">
             <input type="password" name="pwd" placeholder="Password">
-            <input type="hidden" name="selected_region" id="selectedRegion" value="">
+            <input type="hidden" name="selected_region" id="selectedRegion" value="桃園區">
             <select onchange="handleSelectChange(this)">
                 <option>桃園區</option>
                 <option>中壢區</option>
