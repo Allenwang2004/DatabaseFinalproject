@@ -1,14 +1,22 @@
 <?php
-
+require_once 'login_model.inc.php';
+require_once 'login_contr.inc.php';
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $username = $_POST["username"];
     $pwd = $_POST["pwd"];
-    $email = $_POST["email"];
+    $region = $_POST["selected_region"];
 
     try {
         require_once  "try_dbh.inc.php";
 
-        $query = "UPDATE users SET username = :username , pwd = :pwd, email = :email WHERE username = :username;";
+        $result = get_user($pdo,$username);
+        if(!password_verify($pwd, $result["pwd"])){
+            $_SESSION["wrong_password"] = "wrong password";
+            header("Location: ../accounts.php");
+            die();
+        }
+
+        $query = "UPDATE users SET username = :username , pwd = :pwd, region = :region WHERE username = :username;";
 
         $stmt = $pdo->prepare($query);
 
@@ -19,7 +27,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     
         $hashedPwd = password_hash($pwd,PASSWORD_BCRYPT,$options);
         $stmt->bindParam(":pwd",$hashedPwd);
-        $stmt->bindParam(":email",$email);
+        $stmt->bindParam(":region",$region);
 
         $stmt->execute();
 
@@ -34,5 +42,5 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 }
 else{
-    header("Location: ../try_login.php");
+    header("Location: ../accounts.php");
 }
